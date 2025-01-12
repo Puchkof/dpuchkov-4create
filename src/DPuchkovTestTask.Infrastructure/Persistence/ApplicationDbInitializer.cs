@@ -16,7 +16,7 @@ public static class ApplicationDbInitializer
         {
             var context = services.GetRequiredService<ApplicationDbContext>();
             
-            if (context.Database.IsNpgsql())
+            if (context.Database.IsNpgsql() && context.Database.HasPendingModelChanges())
             {
                 await context.Database.MigrateAsync();
             }
