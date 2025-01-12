@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Database=ClinicalTrialsDb;Username=postgres;Password=postgres
+    depends_on:
+      - db
+    networks:
+      - clinical-trials-network
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=ClinicalTrialsDb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - clinical-trials-network
+
+networks:
+  clinical-trials-network:
+    driver: bridge
+
+volumes:
+  postgres-data: 
