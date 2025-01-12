@@ -1,0 +1,6 @@
+@DPuchkovTestTask.API_HostAddress = http://localhost:5209
+
+GET {{DPuchkovTestTask.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

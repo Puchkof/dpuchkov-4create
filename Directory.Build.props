@@ -1,0 +1,6 @@
+<Project>
+    <PropertyGroup>
+        <PreserveCompilationContext>true</PreserveCompilationContext>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    </PropertyGroup>
+</Project> 
