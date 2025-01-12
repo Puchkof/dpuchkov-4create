@@ -29,7 +29,6 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =
     options.SerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
 });
 
-// Register validators
 builder.Services.AddValidatorsFromAssembly(typeof(UploadFileCommand).Assembly);
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -41,12 +40,10 @@ builder.Services.AddScoped<IClinicalTrialProcessor, ClinicalTrialProcessor>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Register Mapster
 var config = TypeAdapterConfig.GlobalSettings;
 config.Scan(typeof(MappingConfig).Assembly);
 builder.Services.AddSingleton(config);
 
-// Add API versioning
 builder.Services.AddApiVersioning(options =>
 {
     options.DefaultApiVersion = new ApiVersion(1.0);
@@ -57,6 +54,10 @@ builder.Services.AddApiVersioning(options =>
     options.GroupNameFormat = "'v'VVV";
     options.SubstituteApiVersionInUrl = true;
 });
+
+builder.Services.Configure<DPuchkovTestTask.Application.Options.FileOptions>(
+    builder.Configuration.GetSection("FileOptions")
+);
 
 var app = builder.Build();
 
